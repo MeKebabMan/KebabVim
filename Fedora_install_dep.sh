@@ -16,3 +16,12 @@ source ~/.bashrc
 
 nvm install 22
 
+# INSTALL PRETTIER
+
+sudo npm install -g prettier
+
+# INSTALL CLANG FORMAT 
+sudo dnf install clang-tools-extra
+
+# INSTALL STYLUA 
+sudo npm i -g @johnnymorganz/stylua-bin
