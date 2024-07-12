@@ -1,0 +1,2 @@
+# KebabVim
+Custom neovim setup!
