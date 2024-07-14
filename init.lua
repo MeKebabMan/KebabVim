@@ -2,32 +2,65 @@
 -- Copyright MeKebabMan 2024 Mit License
 -- NEOVIM CONFIG MADE BY @me_kebab_man (DISCORD), @MeKebabMan (GITHUB)
 
+-- OPTIONS! 
+-- EDIT THE CONFIG OPTIONS IF YOU WANT!
+local AUTO_UPDATE = true
+local SAFE_LANGUAGE_INSTALL = true
+
+
+-- FUNCTIONS
+
+
+local function cmd_exists_async(cmd, callback)
+	vim.defer_fn(function()
+		local provided_command = cmd .. " --version"
+		local handle = io.popen(provided_command .. " 2>&1")
+		if handle then
+			handle:close()
+			callback(true)
+		else
+			callback(false)
+		end
+	end, 0)
+end
+
+local function is_update_needed_async(callback)
+	vim.defer_fn(function()
+		local handle = io.popen("cd ~/.config/nvim/ && git remote update && git status -uno")
+		if handle == nil then
+			callback(false)
+			return false
+		end
+		local result = handle:read("*a")
+		handle:close()
+
+		if result:match("Your branch is behind") then
+			callback(true)
+			return true
+		end
+		callback(false)
+		return false
+	end, 0)
+end
+
 -- CHECK FOR UPDATES!!
 
-local function is_update_needed()
-	local handle = io.popen("cd ~/.config/nvim/ && git remote update && git status -uno")
-	if handle == nil then return false end
-	local result = handle:read("*a");
-	handle:close()
-
-	if result:match("Your branch is behind") then
-		return true
-	end
-	return false
-end
-
 local function update_and_exit()
-	if is_update_needed() then
-		local handle = io.popen("cd ~/.config/nvim/ && git pull origin main")
-		if handle == nil then
-			return
+	is_update_needed_async(function(yes)
+		if yes then
+			local handle = io.popen("cd ~/.config/nvim/ && git pull origin main")
+			if handle == nil then
+				return
+			end
+			handle:close()
+			vim.cmd("qa!")
 		end
-		handle:close()
-		vim.cmd("qa!");
-	end
+	end)
 end
 
-update_and_exit()
+if AUTO_UPDATE then
+	update_and_exit()
+end
 
 -- CHECK FOR UPDATES!!
 
@@ -171,15 +204,45 @@ require("nvim-treesitter.configs").setup({
 
 local language_servers = {
 	"lua_ls",
-	"tsserver",
-	"pyright",
-	"clangd",
-	"html",
-	"cssls",
-	"jsonls",
-	"yamlls",
-	"csharp_ls",
 }
+
+if SAFE_LANGUAGE_INSTALL then
+	cmd_exists_async("dotnet", function(exists)
+		if exists then
+			table.insert(language_servers, "csharp_ls")
+		end
+	end)
+
+	cmd_exists_async("npm", function(exists)
+		if exists then
+			table.insert(language_servers, "tsserver")
+			table.insert(language_servers, "html")
+			table.insert(language_servers, "cssls")
+			table.insert(language_servers, "jsonls")
+			table.insert(language_servers, "yamlls")
+			table.insert(language_servers, "clangd")
+		end
+	end)
+
+	cmd_exists_async("pip", function(exists)
+		if exists then
+			table.insert(language_servers, "pyright")
+			table.insert(language_servers, "clangd")
+		end
+	end)
+else
+	table.insert(language_servers, "csharp_ls")
+	table.insert(language_servers, "tsserver")
+	table.insert(language_servers, "html")
+	table.insert(language_servers, "cssls")
+	table.insert(language_servers, "jsonls")
+	table.insert(language_servers, "yamlls")
+	table.insert(language_servers, "clangd")
+	table.insert(language_servers, "pyright")
+	table.insert(language_servers, "clangd")
+	table.insert(language_servers, "pyright")
+	table.insert(language_servers, "clangd")
+end
 
 require("mason").setup({})
 
