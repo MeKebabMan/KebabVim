@@ -43,7 +43,7 @@ rm -rf ~/.config/nvim/ && mkdir -p ~/.config/nvim/ && git clone https://github.c
 
 # Faster start up? 🚀
 
-Because of KebabVim's Auto update and Safe LSP Install features the start up time may be slow **BUT** heres how you can fix it!
+Because of KebabVim's Auto update feature the start up time may be slow **BUT** heres how you can fix it!
 
 ### Get faster start up speeds:
 - open ~/.config/nvim/init.lua in your favourite code editor and disable the following local variables
@@ -51,5 +51,4 @@ Because of KebabVim's Auto update and Safe LSP Install features the start up tim
 ```lua
 -- SET THESE VARIABLES TO FALSE!!
 local AUTO_UPDATE = false
-local SAFE_LANGUAGE_INSTALL = false
 ```
