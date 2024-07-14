@@ -21,6 +21,8 @@ Plugins bootstrapped onto a single config and randomly sent towards a repository
 - Mason
 - Mason-lspconfig
 - Language_servers
+- barbar tab line
+- notify nvim
 
 # Installation 💾
 
