@@ -2,6 +2,31 @@
 -- Copyright MeKebabMan 2024 Mit License
 -- NEOVIM CONFIG MADE BY @me_kebab_man (DISCORD), @MeKebabMan (GITHUB)
 
+-- CHECK FOR UPDATES!!
+
+local function is_update_needed()
+	local handle = io.popen("cd ~/.config/nvim/ && git remote update && git status -uno")
+	if handle == nil then return false end
+	local result = handle:read("*a");
+	handle:close()
+
+	if result:match("Your branch is behind") then
+		return true
+	end
+	return false
+end
+
+local function update_and_exit()
+	if is_update_needed() then
+		os.execute("~/.config/nvim/Install.sh")
+		vim.cmd("qa!");
+	end
+end
+
+update_and_exit()
+
+-- CHECK FOR UPDATES!!
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -83,6 +108,13 @@ local plugins = {
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope-ui-select.nvim",
 		},
+	},
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+	},
+	{
+		"windwp/nvim-ts-autotag",
 	},
 }
 
@@ -256,3 +288,8 @@ require("telescope").setup({
 
 require("telescope").load_extension("ui-select")
 
+-- Auto pairs & auto tag
+require("nvim-ts-autotag").setup({})
+require("nvim-autopairs").setup({})
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())

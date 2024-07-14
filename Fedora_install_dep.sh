@@ -25,3 +25,6 @@ sudo dnf install clang-tools-extra
 
 # INSTALL STYLUA 
 sudo npm i -g @johnnymorganz/stylua-bin
+
+# INSTALL CURL & WGET & JQ
+sudo dnf install curl wget jq
