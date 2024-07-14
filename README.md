@@ -18,7 +18,6 @@ Plugins bootstrapped onto a single init.lua file and randomly sent towards a rep
 - Mason
 - Mason-lspconfig
 - Language_servers
-- Auto update feature
 
 # Installation 💾
 
@@ -38,18 +37,5 @@ rm -rf ~/.config/nvim/ && mkdir -p ~/.config/nvim/ && git clone https://github.c
 
 - This project is under development
 - This project is only meant for fun and learning!
-- This proejct was created to make sure that I can easily get and use my neovim config!
+- This project was created to make sure that I can easily get and use my neovim config!
 - If you would like to use this then go ahead!
-
-# Faster start up? 🚀
-
-Because of KebabVim's Auto update feature the start up time may be slow **BUT** heres how you can fix it!
-
-### Get faster start up speeds:
-- open ~/.config/nvim/init.lua in your favourite code editor and disable the following local variables
-
-```lua
--- SET THESE VARIABLES TO FALSE!!
-local AUTO_UPDATE = false
-```
-
