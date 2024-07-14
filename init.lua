@@ -24,38 +24,31 @@ local function cmd_exists_async(cmd, callback)
 	end, 0)
 end
 
-local function is_update_needed_async(callback)
-	vim.defer_fn(function()
-		local handle = io.popen("cd ~/.config/nvim/ && git remote update && git status -uno")
+local function is_update_needed()
+		local handle = io.popen("cd ~/.config/nvim/ && git remote update && git status -uno 2>&1")
 		if handle == nil then
-			callback(false)
 			return false
 		end
 		local result = handle:read("*a")
 		handle:close()
 
 		if result:match("Your branch is behind") then
-			callback(true)
 			return true
 		end
-		callback(false)
 		return false
-	end, 0)
 end
 
 -- CHECK FOR UPDATES!!
 
 local function update_and_exit()
-	is_update_needed_async(function(yes)
-		if yes then
-			local handle = io.popen("cd ~/.config/nvim/ && git pull origin main")
+		if is_update_needed() then
+			local handle = io.popen("cd ~/.config/nvim/ && git pull origin main 2>&1")
 			if handle == nil then
 				return
 			end
 			handle:close()
 			vim.cmd("qa!")
 		end
-	end)
 end
 
 if AUTO_UPDATE then
