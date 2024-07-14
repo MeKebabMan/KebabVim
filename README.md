@@ -30,7 +30,7 @@ Just a reminder that this does require some dependencies to install but no worri
 **WARNING: LINUX ONLY! USE WSL 2 UBUNTU OR DEBIAN FOR WINDOWS!!**
 
 ```sh
-rm -rf ~/.config/nvim/* && mkdir -p ~/.config/nvim/ && git clone https://github.com/MeKebabMan/KebabVim.git ~/.config/nvim/ && \
+rm -rf ~/.config/nvim/ && mkdir -p ~/.config/nvim/ && git clone https://github.com/MeKebabMan/KebabVim.git ~/.config/nvim/ && \
  bash ~/.config/nvim/Install_dep.sh && nvim ~/.config/nvim/NVIM_README.txt
 ```
 
