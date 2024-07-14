@@ -22,6 +22,9 @@ File explorer
 Telescope 
 lualine
 Good default theme!
+Auto-updates
+Autotag 
+autopairs
 
 Keybinds:
 
