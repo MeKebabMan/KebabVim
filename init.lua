@@ -18,8 +18,12 @@ end
 
 local function update_and_exit()
 	if is_update_needed() then
+		local handle = io.popen("cd ~/.config/nvim/ && git pull origin main")
+		if handle == nil then
+			return
+		end
+		handle:close()
 		vim.cmd("qa!");
-		io.popen("cd ~/.config/nvim/ && git pull origin main")
 	end
 end
 
