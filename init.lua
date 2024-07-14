@@ -8,6 +8,16 @@ local AUTO_UPDATE = true
 
 -- FUNCTIONS
 
+local function File_exists(file)
+	local handle = io.open(vim.fn.expand(file), "r")
+	if handle then
+		handle:close()
+		return true
+	else
+		return false
+	end
+end
+
 local function is_update_needed()
 	local handle = io.popen("cd ~/.config/nvim/ && git remote update && git status -uno 2>&1")
 	if handle == nil then
@@ -31,7 +41,11 @@ local function update_and_exit()
 			return
 		end
 		handle:close()
-		vim.cmd("qa!")
+		if File_exists("~/.config/nvim/NVIM_README.txt") then
+			vim.cmd("edit ~/.config/nvim/NVIM_README.txt")
+		else
+			vim.cmd("qa!")
+		end
 	end
 end
 
