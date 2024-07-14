@@ -52,3 +52,4 @@ Because of KebabVim's Auto update feature the start up time may be slow **BUT** 
 -- SET THESE VARIABLES TO FALSE!!
 local AUTO_UPDATE = false
 ```
+
