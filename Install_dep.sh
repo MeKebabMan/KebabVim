@@ -10,6 +10,8 @@
 NODE_VERSION=22
 DOTNET_VERSION=8.0
 
+echo "======================| KEBABVIM |==========================="
+
 # Get user permissions!
 read -p "Sudo permissions are required for this bash script. Allow sudo permissions? (Y/N): " Perms
 if [[ ! $Perms =~ ^[Yy][Ee]?[Ss]?$ ]]; then 
