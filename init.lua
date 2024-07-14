@@ -2,53 +2,37 @@
 -- Copyright MeKebabMan 2024 Mit License
 -- NEOVIM CONFIG MADE BY @me_kebab_man (DISCORD), @MeKebabMan (GITHUB)
 
--- OPTIONS! 
+-- OPTIONS!
 -- EDIT THE CONFIG OPTIONS IF YOU WANT!
 local AUTO_UPDATE = true
-local SAFE_LANGUAGE_INSTALL = true
-
 
 -- FUNCTIONS
 
-
-local function cmd_exists_async(cmd, callback)
-	vim.defer_fn(function()
-		local provided_command = cmd .. " --version"
-		local handle = io.popen(provided_command .. " 2>&1")
-		if handle then
-			handle:close()
-			callback(true)
-		else
-			callback(false)
-		end
-	end, 0)
-end
-
 local function is_update_needed()
-		local handle = io.popen("cd ~/.config/nvim/ && git remote update && git status -uno 2>&1")
-		if handle == nil then
-			return false
-		end
-		local result = handle:read("*a")
-		handle:close()
-
-		if result:match("Your branch is behind") then
-			return true
-		end
+	local handle = io.popen("cd ~/.config/nvim/ && git remote update && git status -uno 2>&1")
+	if handle == nil then
 		return false
+	end
+	local result = handle:read("*a")
+	handle:close()
+
+	if result:match("Your branch is behind") then
+		return true
+	end
+	return false
 end
 
 -- CHECK FOR UPDATES!!
 
 local function update_and_exit()
-		if is_update_needed() then
-			local handle = io.popen("cd ~/.config/nvim/ && git pull origin main 2>&1")
-			if handle == nil then
-				return
-			end
-			handle:close()
-			vim.cmd("qa!")
+	if is_update_needed() then
+		local handle = io.popen("cd ~/.config/nvim/ && git pull origin main 2>&1")
+		if handle == nil then
+			return
 		end
+		handle:close()
+		vim.cmd("qa!")
+	end
 end
 
 if AUTO_UPDATE then
@@ -197,45 +181,16 @@ require("nvim-treesitter.configs").setup({
 
 local language_servers = {
 	"lua_ls",
+	"tsserver",
+	"html",
+	"cssls",
+	"jsonls",
+	"yamlls",
+	"clangd",
+	"pyright",
+	"csharp_ls",
+	"cmake",
 }
-
-if SAFE_LANGUAGE_INSTALL then
-	cmd_exists_async("dotnet", function(exists)
-		if exists then
-			table.insert(language_servers, "csharp_ls")
-		end
-	end)
-
-	cmd_exists_async("npm", function(exists)
-		if exists then
-			table.insert(language_servers, "tsserver")
-			table.insert(language_servers, "html")
-			table.insert(language_servers, "cssls")
-			table.insert(language_servers, "jsonls")
-			table.insert(language_servers, "yamlls")
-			table.insert(language_servers, "clangd")
-		end
-	end)
-
-	cmd_exists_async("pip", function(exists)
-		if exists then
-			table.insert(language_servers, "pyright")
-			table.insert(language_servers, "clangd")
-		end
-	end)
-else
-	table.insert(language_servers, "csharp_ls")
-	table.insert(language_servers, "tsserver")
-	table.insert(language_servers, "html")
-	table.insert(language_servers, "cssls")
-	table.insert(language_servers, "jsonls")
-	table.insert(language_servers, "yamlls")
-	table.insert(language_servers, "clangd")
-	table.insert(language_servers, "pyright")
-	table.insert(language_servers, "clangd")
-	table.insert(language_servers, "pyright")
-	table.insert(language_servers, "clangd")
-end
 
 require("mason").setup({})
 
