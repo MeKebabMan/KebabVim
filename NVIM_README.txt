@@ -1,4 +1,4 @@
-Hello!
+Hello! IF THIS PAGE OPENED THAT MEANS THAT YOU HAVE INSTALLED KEBABVIM OR KEBABVIM HAS UPDATED!
 Welcome to a custom set up made by @me_kebab_man (DISCORD), @MeKebabMan (GITHUB)
 
 Features:
@@ -25,6 +25,7 @@ Good default theme!
 Auto-updates
 Autotag 
 autopairs
+auto updates
 
 Keybinds:
 
