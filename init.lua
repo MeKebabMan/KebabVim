@@ -17,17 +17,28 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	end
 end
 vim.opt.rtp:prepend(lazypath)
-vim.opt.rtp:prepend(vim.fn.expand("~/.config/nvim/KebabVim"))
 
--- KEBAB VIM CONFIG
-local KebabVim_config = require("KebabVim.KebabVim_config")
+-- KEBAB VIM SET UP!
+local function directory_exists(directory)
+	local stat = vim.loop.fs_stat(vim.fn.expand(directory))
+	return stat and stat.type == "directory"
+end
+
+if directory_exists("~/.config/nvim/KebabVim") then
+	vim.opt.rtp:prepend(vim.fn.expand("~/.config/nvim/KebabVim"))
+
+	local kebabvim_path = vim.fn.expand("~/.config/nvim/KebabVim")
+	package.path = package.path .. ";" .. kebabvim_path .. "/?.lua"
+end
+
+local KebabVim_config = require("KebabVim_config")
 
 -- Plugin manager
 require("lazy").setup(KebabVim_config.plugins, {})
 
-local KebabVim_utils = require("KebabVim.KebabVim_utils")
-local plugin_module = require("KebabVim.plugin_module")
-local vim_options = require("KebabVim.vim_options")
+local KebabVim_utils = require("KebabVim_utils")
+local plugin_module = require("plugin_module")
+local vim_options = require("vim_options")
 
 KebabVim_utils.StartUp()
 
