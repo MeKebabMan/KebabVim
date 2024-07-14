@@ -18,8 +18,8 @@ end
 
 local function update_and_exit()
 	if is_update_needed() then
-		io.popen("cd ~/.config/nvim/ && git pull origin main")
 		vim.cmd("qa!");
+		io.popen("cd ~/.config/nvim/ && git pull origin main")
 	end
 end
 
