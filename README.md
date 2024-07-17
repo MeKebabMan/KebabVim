@@ -3,6 +3,9 @@
 </h1>
 <h1 align="center">
     <img alt="GitHub commit status" src="https://img.shields.io/github/checks-status/MeKebabMan/KebabVim/main?style=for-the-badge&logo=github&labelColor=blue">
+    <a href="https://github.com/MeKebabMan">
+        <img alt="Maintainer" src="https://img.shields.io/badge/Maintainer-MeKebabMan-blue?style=for-the-badge&logo=neovim">
+    </a>
 </h1>
 
 Plugins bootstrapped onto a single config and randomly sent towards a repository for people to use!
