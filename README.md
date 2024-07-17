@@ -1,10 +1,8 @@
 <h1 align="center">
     KebabVim 🌯
 </h1>
+
 ![GitHub commit status](https://img.shields.io/github/checks-status/MeKebabMan/KebabVim/main?style=for-the-badge&logo=github&labelColor=blue)
-<h1 align="center">
-   
-</h1>
 
 Plugins bootstrapped onto a single config and randomly sent towards a repository for people to use!
 
