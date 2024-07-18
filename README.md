@@ -10,6 +10,10 @@
 
 Plugins bootstrapped onto a single config and randomly sent towards a repository for people to use!
 
+# Picutres
+
+![image](https://github.com/user-attachments/assets/9350790c-c65a-4e93-a80d-c30f3a8d0445)
+
 ### Features & Plugins:
 - Autotag
 - Autopairs
@@ -29,6 +33,10 @@ Plugins bootstrapped onto a single config and randomly sent towards a repository
 - Language_servers
 - barbar tab line
 - notify nvim
+- whick key nvim
+- alpha nvim
+- comments nvim
+- gitsigns nvim
 
 # Installation 💾
 
