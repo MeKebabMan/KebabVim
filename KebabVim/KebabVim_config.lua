@@ -1,6 +1,5 @@
 local KebabVim_config = {}
 
-
 KebabVim_config.plugins = {
 	{
 		"rebelot/kanagawa.nvim",
@@ -78,8 +77,72 @@ KebabVim_config.plugins = {
 	{
 		"romgrk/barbar.nvim",
 	},
-}
+	{
 
+		"IogaMaster/neocord",
+		event = "VeryLazy",
+	},
+	{
+		"numToStr/Comment.nvim",
+	},
+	{
+		"lewis6991/gitsigns.nvim",
+	},
+	{
+		"folke/trouble.nvim",
+		cmd = "Trouble",
+		opts = {},
+		keys = {
+			{
+				"<leader>xx",
+				"<cmd>Trouble diagnostics toggle<cr>",
+				desc = "Diagnostics (Trouble)",
+			},
+			{
+				"<leader>xX",
+				"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+				desc = "Buffer Diagnostics (Trouble)",
+			},
+			{
+				"<leader>cs",
+				"<cmd>Trouble symbols toggle focus=false<cr>",
+				desc = "Symbols (Trouble)",
+			},
+			{
+				"<leader>cl",
+				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+				desc = "LSP Definitions / references / ... (Trouble)",
+			},
+			{
+				"<leader>xL",
+				"<cmd>Trouble loclist toggle<cr>",
+				desc = "Location List (Trouble)",
+			},
+			{
+				"<leader>xQ",
+				"<cmd>Trouble qflist toggle<cr>",
+				desc = "Quickfix List (Trouble)",
+			},
+		},
+	},
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		opts = {},
+		keys = {
+			{
+				"<leader>?",
+				function()
+					require("which-key").show({ global = false })
+				end,
+				desc = "Buffer Local Keymaps (which-key)",
+			},
+		},
+	},
+	{
+		"goolord/alpha-nvim",
+	}
+}
 
 KebabVim_config.language_servers = {
 	"lua_ls",
@@ -93,7 +156,6 @@ KebabVim_config.language_servers = {
 	"csharp_ls",
 	"cmake",
 }
-
 
 KebabVim_config.treesitter = {
 	"lua",
@@ -111,5 +173,9 @@ KebabVim_config.treesitter = {
 	"xml",
 	"c_sharp",
 }
+
+
+KebabVim_config.Use_extra_plugins = true
+KebabVim_config.Use_default_welcome_screen = true
 
 return KebabVim_config

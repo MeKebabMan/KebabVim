@@ -2,7 +2,9 @@ local vim_options = {}
 
 function vim_options.SetKebabVimDefault()
 	vim.cmd([[ 
-	
+
+	syntax enable
+
 	set number
 	set cursorline
 	
