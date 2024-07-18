@@ -25,7 +25,7 @@ Plugins bootstrapped onto a single config and randomly sent towards a repository
 - none ls extras
 - Neotree
 - lualine
-- nord theme
+- kanagawa theme
 - Auto completion
 - Lspconfig
 - Mason
