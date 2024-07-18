@@ -26,7 +26,6 @@ local function directory_exists(directory)
 	return stat and stat.type == "directory"
 end
 
-
 if directory_exists("~/.config/nvim/KebabVim") then
 	vim.opt.rtp:prepend(vim.fn.expand("~/.config/nvim/KebabVim"))
 
