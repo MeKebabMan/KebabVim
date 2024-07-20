@@ -141,6 +141,9 @@ KebabVim_config.plugins = {
 	},
 	{
 		"goolord/alpha-nvim",
+	},
+	{
+		"nvim-lua/plenary.nvim",
 	}
 }
 

@@ -2,6 +2,12 @@
 -- Copyright MeKebabMan 2024 Mit License
 -- NEOVIM CONFIG MADE BY @me_kebab_man (DISCORD), @MeKebabMan (GITHUB)
 
+-- GLOBAL VARIABLES
+vim.g.KebabVimPath = vim.fn.expand("~/.config/nvim/KebabVim/")
+vim.g.NvimPath = vim.fn.expand("~/.config/nvim/")
+vim.g.ReadMeTXT = "NVIM_README.txt"
+vim.g.AutoUpdate = true
+
 local os = require("os")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -26,11 +32,11 @@ local function directory_exists(directory)
 	return stat and stat.type == "directory"
 end
 
-if directory_exists("~/.config/nvim/KebabVim") then
-	vim.opt.rtp:prepend(vim.fn.expand("~/.config/nvim/KebabVim"))
+if directory_exists(vim.fn.expand(tostring(vim.g.KebabVimPath))) then
 
-	local kebabvim_path = vim.fn.expand("~/.config/nvim/KebabVim")
-	package.path = package.path .. ";" .. kebabvim_path .. "/?.lua"
+	vim.opt.rtp:prepend(vim.fn.expand(tostring(vim.g.KebabVimPath)))
+
+	package.path = package.path .. ";" .. vim.fn.expand(tostring(vim.g.KebabVimPath)) .. "/?.lua"
 
 	local KebabVim_config = require("KebabVim_config")
 
@@ -75,6 +81,12 @@ if directory_exists("~/.config/nvim/KebabVim") then
 		require("gitsigns").setup({})
 
 		plugin_module.which_key()
+
+		if vim.g.AutoUpdate then
+			if KebabVim_utils.UPDATE() then
+				vim.notify("Failed to do a update check!", vim.log.levels.ERROR)
+			end
+		end
 	end
 else
 	require("lazy").setup({
@@ -99,7 +111,7 @@ else
 
 	vim.notify = require("notify")
 
-	vim.notify("KebabVim directory does not exist! Falling back!", "ERROR")
+	vim.notify("KebabVim directory does not exist! Falling back!", vim.log.levels.ERROR)
 
 	vim.cmd([[
 		syntax enable
