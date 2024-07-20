@@ -37,6 +37,8 @@ Plugins bootstrapped onto a single config and randomly sent towards a repository
 - alpha nvim
 - comments nvim
 - gitsigns nvim
+- Auto update feature
+- plenary
 
 # Installation 💾
 
