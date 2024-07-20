@@ -62,6 +62,7 @@ rm -rf ~/.config/nvim/ && mkdir -p ~/.config/nvim/ && git clone https://github.c
 - This project was created to make sure that I can easily get and use my neovim config!
 - If you would like to use this then go ahead!
 - Theres only one person working on this project..
+- Not everything is easy to make and they may not work
 
 # Features added based on user comments
 
