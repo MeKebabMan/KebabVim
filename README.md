@@ -9,6 +9,7 @@
 </h1>
 
 Plugins bootstrapped onto a single config and randomly sent towards a repository for people to use!
+KebabVim comes with prebuilt utils aswell..
 
 # Picutres
 
@@ -60,3 +61,7 @@ rm -rf ~/.config/nvim/ && mkdir -p ~/.config/nvim/ && git clone https://github.c
 - This project is only meant for fun and learning!
 - This project was created to make sure that I can easily get and use my neovim config!
 - If you would like to use this then go ahead!
+
+# Features added based on user comments
+
+- Tab to complete
