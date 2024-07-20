@@ -10,6 +10,7 @@ function KebabVim_utils.StartUp()
 end
 
 -- WARNING: MAY BREAK!
+-- Didnt have time to fix (DO NOT USE!)
 function KebabVim_utils.UPDATE()
 	if not vim.g.ReadMeTXT or not vim.g.NvimPath then
 		return false

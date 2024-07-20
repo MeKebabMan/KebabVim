@@ -82,11 +82,11 @@ if directory_exists(vim.fn.expand(tostring(vim.g.KebabVimPath))) then
 
 		plugin_module.which_key()
 
-		if vim.g.AutoUpdate then
-			if not KebabVim_utils.UPDATE() then
-				vim.notify("Failed to do a update check!", vim.log.levels.ERROR)
-			end
-		end
+		-- if vim.g.AutoUpdate then
+		-- 	if not KebabVim_utils.UPDATE() then
+		-- 		vim.notify("Failed to do a update check!", vim.log.levels.ERROR)
+		-- 	end
+		-- end
 	end
 else
 	require("lazy").setup({
