@@ -17,45 +17,66 @@ function KebabVim_utils.UPDATE()
 
 	local job = require("plenary.job")
 
-	local output = {}
+	local fetch_data = {}
+	local diff_output = {}
+	local pull_output = {}
 
 	job:new({
 		command = "git",
-		args = {"status", "--porcelain"},
+		args = { "fetch", "--all" },
 		cwd = vim.fn.expand(tostring(vim.g.NvimPath)),
-		on_stdout = function (_, data)
-			table.insert(output, data)
-		end
+		on_stdout = function(_, data)
+			table.insert(fetch_data, data)
+		end,
+		on_stderr = function(_, data)
+			table.insert(fetch_data, data)
+		end,
 	}):sync()
 
-	local changes = output;
-	if #changes > 0 then
+	job:new({
+		command = "git",
+		args = { "diff", "--name-only", "HEAD", "origin/main" },
+		cwd = vim.fn.expand(tostring(vim.g.NvimPath)),
+		on_stdout = function(_, data)
+			if data and data ~= "" then
+				table.insert(diff_output, data)
+			end
+		end,
+		on_stderr = function(_, data)
+			table.insert(diff_output, data)
+		end,
+	})
 
-		vim.notify("KebabVim repo and this repo is not matching Preparing to update! DISABLE THIS FEATURE IN INIT.LUA", vim.log.levels.INFO)
+	if #diff_output > 0 then
+		vim.notify(
+			"Difference found between repositories.. Preparing to update!\nDISABLE FEATURE AT INIT.LUA",
+			vim.log.levels.INFO
+		)
 
-		local output_pull = {}
-
-		-- PULLING NEW CONTENT FROM THE REPOSITORY!
 		job:new({
 			command = "git",
-			args = {"pull", "origin", "main"},
+			args = { "pull", "origin", "main" },
 			cwd = vim.fn.expand(tostring(vim.g.NvimPath)),
-			on_stdout = function (_, data)
-				table.insert(output, data)
+			on_stdout = function(_, data)
+				table.insert(pull_output, data)
 			end,
-			on_stderr = function (_, data)
-				table.insert(output, data)
-			end
+			on_stderr = function(_, data)
+				table.insert(pull_output, data)
+			end,
 		}):sync()
 
-		if #output_pull > 0 then
-			vim.notify("Update successfully installed!", vim.log.levels.INFO)
-			vim.cmd("e " .. vim.fn.expand(tostring(vim.g.NvimPath)) .. tostring(vim.g.ReadMeTXT))
+		if #pull_output > 0 then
+			vim.notify("Update successfull!", vim.log.level.INFO)
+			vim.cmd("e " .. vim.fn.expand(tostring(vim.g.NvimPath)) .. "/" .. tostring(vim.g.ReadMeTXT))
 		else
-			vim.notify("Failed to update: "..tostring(output_pull)..".\nThis may be because this config has been changed.\nIf so then please disable this feature in INIT.LUA.\nI am still working on it SORRY!\nPlease post any issues in the repository.\nThank you!", vim.log.levels.ERROR)
+			vim.notify(
+				"Failed to update: "
+					.. tostring(pull_output)
+					.. "\nTHIS FEATURE IS UNDER DEVELOPMENT\nDISABLE AT INIT.LUA",
+				vim.log.levels.ERROR
+			)
 			return false
 		end
-
 	end
 
 	return true
