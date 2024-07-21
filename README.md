@@ -38,7 +38,7 @@ KebabVim comes with prebuilt utils aswell..
 - alpha nvim
 - comments nvim
 - gitsigns nvim
-- Auto update feature
+- Auto update
 - plenary
 
 # Installation 💾
