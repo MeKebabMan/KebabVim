@@ -67,4 +67,3 @@ rm -rf ~/.config/nvim/ && mkdir -p ~/.config/nvim/ && git clone https://github.c
 # Features added based on user comments
 
 - Tab to complete
-- Auto update (Working on it)
