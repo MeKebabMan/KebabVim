@@ -7,6 +7,7 @@ vim.g.KebabVimPath = vim.fn.expand("~/.config/nvim/KebabVim/")
 vim.g.NvimPath = vim.fn.expand("~/.config/nvim/")
 vim.g.ReadMeTXT = "NVIM_README.txt"
 vim.g.AutoUpdate = true
+vim.g.GitBranch = "main"
 
 local os = require("os")
 

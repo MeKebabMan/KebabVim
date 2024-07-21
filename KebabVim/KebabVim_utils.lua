@@ -10,8 +10,9 @@ function KebabVim_utils.StartUp()
 end
 
 -- WARNING: MAY BREAK!
+-- PULLS CONTENT FROM https://github.com/MeKebabMan/KebabVim.git
 function KebabVim_utils.UPDATE()
-	if not vim.g.ReadMeTXT or not vim.g.NvimPath then
+	if not vim.g.ReadMeTXT or not vim.g.NvimPath or not vim.g.GitBranch then
 		return false
 	end
 
@@ -23,7 +24,7 @@ function KebabVim_utils.UPDATE()
 
 	job:new({
 		command = "git",
-		args = { "fetch", "origin", "main" },
+		args = { "fetch", "origin", tostring(vim.g.GitBranch) },
 		cwd = vim.fn.expand(tostring(vim.g.NvimPath)),
 		on_stdout = function(_, data)
 			table.insert(fetch_data, data)
@@ -33,9 +34,9 @@ function KebabVim_utils.UPDATE()
 		end,
 	}):sync()
 
-	job:new({
+	local diff_job = job:new({
 		command = "git",
-		args = { "diff", "HEAD", "origin/main", "--exit-code", "--quiet" },
+		args = { "diff", "HEAD", "origin/" .. tostring(vim.g.GitBranch), "--exit-code", "--quiet" },
 		cwd = vim.fn.expand(tostring(vim.g.NvimPath)),
 		on_stdout = function(_, data)
 			table.insert(diff_output, data)
@@ -45,7 +46,9 @@ function KebabVim_utils.UPDATE()
 		end,
 	}):sync()
 
-	if #diff_output > 0 then
+	local diff_exit_code = diff_job.code
+
+	if diff_exit_code ~= 0 then
 		vim.notify(
 			"Difference found between repositories.. Preparing to update!\nDISABLE FEATURE AT INIT.LUA",
 			vim.log.levels.INFO
@@ -53,7 +56,7 @@ function KebabVim_utils.UPDATE()
 
 		job:new({
 			command = "git",
-			args = { "pull", "origin", "main" },
+			args = { "pull", "origin", tostring(vim.g.GitBranch) },
 			cwd = vim.fn.expand(tostring(vim.g.NvimPath)),
 			on_stdout = function(_, data)
 				table.insert(pull_output, data)
