@@ -40,6 +40,7 @@ KebabVim comes with prebuilt utils aswell..
 - gitsigns nvim
 - Auto update
 - plenary
+- KebabVim config file (Allows you to create & change global vim variables)
 
 # Installation 💾
 
@@ -67,4 +68,3 @@ rm -rf ~/.config/nvim/ && mkdir -p ~/.config/nvim/ && git clone https://github.c
 # Features added based on user comments
 
 - Tab to complete
-- Auto update
