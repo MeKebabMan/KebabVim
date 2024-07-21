@@ -10,7 +10,6 @@ function KebabVim_utils.StartUp()
 end
 
 -- WARNING: MAY BREAK!
--- Didnt have time to fix (DO NOT USE!)
 function KebabVim_utils.UPDATE()
 	if not vim.g.ReadMeTXT or not vim.g.NvimPath then
 		return false
@@ -24,7 +23,7 @@ function KebabVim_utils.UPDATE()
 
 	job:new({
 		command = "git",
-		args = { "fetch", "--all" },
+		args = { "fetch", "origin", "main" },
 		cwd = vim.fn.expand(tostring(vim.g.NvimPath)),
 		on_stdout = function(_, data)
 			table.insert(fetch_data, data)
@@ -36,17 +35,15 @@ function KebabVim_utils.UPDATE()
 
 	job:new({
 		command = "git",
-		args = { "diff", "--name-only", "HEAD", "origin/main" },
+		args = { "diff", "HEAD", "origin/main", "--exit-code", "--quiet" },
 		cwd = vim.fn.expand(tostring(vim.g.NvimPath)),
 		on_stdout = function(_, data)
-			if data and data ~= "" then
-				table.insert(diff_output, data)
-			end
+			table.insert(diff_output, data)
 		end,
 		on_stderr = function(_, data)
 			table.insert(diff_output, data)
 		end,
-	})
+	}):sync()
 
 	if #diff_output > 0 then
 		vim.notify(
@@ -67,7 +64,7 @@ function KebabVim_utils.UPDATE()
 		}):sync()
 
 		if #pull_output > 0 then
-			vim.notify("Update successfull!", vim.log.level.INFO)
+			vim.notify("Update successfull!", vim.log.levels.INFO)
 			vim.cmd("e " .. vim.fn.expand(tostring(vim.g.NvimPath)) .. "/" .. tostring(vim.g.ReadMeTXT))
 		else
 			vim.notify(
