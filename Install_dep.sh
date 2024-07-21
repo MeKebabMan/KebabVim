@@ -15,8 +15,8 @@ GRANTED=false
 echo "======================| KEBABVIM |==========================="
 
 # Get user permissions!
-read -p "Sudo permissions are required for this bash script. Allow sudo permissions? (Y/N): " Perms
 echo "WARNING: DEFAULT IS (NO)"
+read -p "Sudo permissions are required for this bash script. Allow sudo permissions? (Y/N): " Perms
 if [[ ! $Perms =~ ^[Yy][Ee]?[Ss]?$ ]]; then 
 	echo "Permission's denied unable to go forward! exit 0"
 	exit 0
