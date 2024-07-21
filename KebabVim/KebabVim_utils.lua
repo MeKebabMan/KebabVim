@@ -92,4 +92,55 @@ function KebabVim_utils.UPDATE()
 	return true
 end
 
+function KebabVim_utils.GetVariables(_config_file)
+	if _config_file and type(_config_file) ~= "string" then
+		vim.notify("Could not parse Kebabvim config", vim.log.levels.ERROR, {
+			title = "ERROR",
+		})
+		return false
+	end
+
+	local config_file = vim.fn.expand(tostring(_config_file))
+
+	-- read the file 
+	local file = io.open(config_file, "r")
+	if not file then
+		vim.notify("Could not parse Kebabvim config", vim.log.levels.ERROR, {
+			title = "ERROR",
+		})
+		return false
+	end
+
+	local content = file:read("*all")
+	file:close()
+
+	-- parse the file content 
+	local data = {}
+	for line in content:gmatch("[^\r\n]+") do
+		local key, value = line:match("([^=]+)=([^=]+)")
+		if key and value then
+			data[key:match("^%s*(.-)%s*$")] = value:match("^%s*(.-)%s*$")
+		end
+	end
+
+	-- Convert all the variables into readable data 
+	for key, value in pairs(data) do
+		if key and value then
+			if key and string.lower(tostring(value)) == string.lower(tostring("true")) then
+				vim.g[key] = true
+			elseif key and string.lower(tostring(value)) == string.lower(tostring("false")) then
+				vim.g[key] = false
+			elseif key and value:sub(1, 1) == '"' and value:sub(-1) == '"' then
+				vim.g[key] = tostring(value:sub(2, -2))
+			elseif key and string.lower(tostring(value)) == string.lower(tostring("null")) then
+				vim.g[key] = nil
+			else
+				vim.g[key] = value
+			end
+		end
+	end
+
+	return true
+end
+
 return KebabVim_utils

@@ -2,15 +2,29 @@
 -- Copyright MeKebabMan 2024 Mit License
 -- NEOVIM CONFIG MADE BY @me_kebab_man (DISCORD), @MeKebabMan (GITHUB)
 
--- GLOBAL VARIABLES
+-- KEBAB VIM GITHUB REPOSITORY: https://github.com/MeKebabMan/KebabVim
+-- SUPPORTED OS: 
+-- Linux / Unix 
+-- Mac OS (Not tested)
+-- WSL+ with Windows 
+-- UNSUPPORTED OS:
+-- Windows (WORKING ON IT!)
+
+-- IMPORTANT VARIABLES 
 vim.g.KebabVimPath = vim.fn.expand("~/.config/nvim/KebabVim/")
 vim.g.NvimPath = vim.fn.expand("~/.config/nvim/")
+
+-- DEFAULT VARIABLES
 vim.g.ReadMeTXT = "NVIM_README.txt"
 vim.g.AutoUpdate = true
 vim.g.GitBranch = "main"
+vim.g.UseExtraPlugins = true
+vim.g.UseDefaultHomeScreen = true
 
 local os = require("os")
 
+-- Lazy.nvim plugin manager 
+-- PLUGIN MANAGER: https://github.com/folke/lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -34,7 +48,6 @@ local function directory_exists(directory)
 end
 
 if directory_exists(vim.fn.expand(tostring(vim.g.KebabVimPath))) then
-
 	vim.opt.rtp:prepend(vim.fn.expand(tostring(vim.g.KebabVimPath)))
 
 	package.path = package.path .. ";" .. vim.fn.expand(tostring(vim.g.KebabVimPath)) .. "/?.lua"
@@ -53,8 +66,16 @@ if directory_exists(vim.fn.expand(tostring(vim.g.KebabVimPath))) then
 	-- Vim options
 	vim_options.SetKebabVimDefault()
 
+	if KebabVim_utils.GetVariables("~/.config/nvim/KebabVim.config") == false then
+		vim.notify("FAILED TO LOAD VARIABLES!", vim.log.levels.ERROR, {
+			title = "ERROR",
+		})
+	end
+
 	-- Plugins
-	if KebabVim_config.Use_default_welcome_screen then
+	if vim.g.UseDefaultHomeScreen == true then
+		-- DEBUG 
+		-- vim.notify("Default Home Screen", vim.log.levels.INFO)
 		plugin_module.alphanvim()
 	end
 
@@ -76,14 +97,18 @@ if directory_exists(vim.fn.expand(tostring(vim.g.KebabVimPath))) then
 	plugin_module.KebabVim_SetUp_DefaultNotify()
 	plugin_module.barbar()
 
-	if KebabVim_config.Use_extra_plugins then
+	if vim.g.UseExtraPlugins == true then
+		-- DEBUG 
+		-- vim.notify("Extra Plugins", vim.log.levels.INFO)
 		require("Comment").setup({})
 
 		require("gitsigns").setup({})
 
 		plugin_module.which_key()
 
-		if vim.g.AutoUpdate then
+		if vim.g.AutoUpdate == true then
+			-- DEBUG 
+			-- vim.notify("Auto Update", vim.log.levels.INFO)
 			if not KebabVim_utils.UPDATE() then
 				vim.notify("Failed to do a update check!", vim.log.levels.ERROR)
 			end
@@ -104,8 +129,8 @@ else
 			"goolord/alpha-nvim",
 			dependencies = {
 				"nvim-tree/nvim-web-devicons",
-			}
-		}
+			},
+		},
 	}, {})
 
 	vim.opt.termguicolors = true
@@ -160,8 +185,8 @@ else
 	}
 
 	dashboard.section.buttons.val = {
-	         dashboard.button( "e", "  New file (DEFAULT)" , ":ene <BAR> startinsert <CR>"),
-	         dashboard.button( "q", "󰅚  Quit NVIM (DEFAULT)" , ":qa<CR>"),
+		dashboard.button("e", "  New file (DEFAULT)", ":ene <BAR> startinsert <CR>"),
+		dashboard.button("q", "󰅚  Quit NVIM (DEFAULT)", ":qa<CR>"),
 	}
 
 	alpha.setup(dashboard.opts)

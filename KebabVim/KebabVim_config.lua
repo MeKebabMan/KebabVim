@@ -1,5 +1,6 @@
 local KebabVim_config = {}
 
+-- PLUGINS
 KebabVim_config.plugins = {
 	{
 		"rebelot/kanagawa.nvim",
@@ -147,6 +148,7 @@ KebabVim_config.plugins = {
 	}
 }
 
+-- LANGUAGE SERVERS
 KebabVim_config.language_servers = {
 	"lua_ls",
 	"tsserver",
@@ -160,6 +162,7 @@ KebabVim_config.language_servers = {
 	"cmake",
 }
 
+-- TREESITTER SYNTAX 
 KebabVim_config.treesitter = {
 	"lua",
 	"c",
@@ -177,8 +180,5 @@ KebabVim_config.treesitter = {
 	"c_sharp",
 }
 
-
-KebabVim_config.Use_extra_plugins = true
-KebabVim_config.Use_default_welcome_screen = true
 
 return KebabVim_config
