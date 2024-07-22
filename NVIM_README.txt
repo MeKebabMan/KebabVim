@@ -8,7 +8,7 @@ Why did this file randomly open up?
 NOTES:
 KebabVim is hard to maintain after all I am only one person..
 
-Welcome to a custom set up made by @me_kebab_man (DISCORD), @MeKebabMan (GITHUB)
+Welcome to a neovim config made by @me_kebab_man (DISCORD), @MeKebabMan (GITHUB)
 
 Basic KebabVim Keybinds:
 
