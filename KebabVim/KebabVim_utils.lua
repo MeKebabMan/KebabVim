@@ -50,7 +50,7 @@ function KebabVim_utils.UPDATE()
 
 	if diff_exit_code ~= nil and diff_exit_code ~= 0 then
 		vim.notify(
-			"Difference found between repositories.. Preparing to update!\nDISABLE FEATURE AT INIT.LUA",
+			"Difference found between repositories.. Preparing to update!\nDISABLE FEATURE AT KebabVim.config",
 			vim.log.levels.INFO,
 			{
 				title = "AUTO UPDATE",
@@ -79,7 +79,7 @@ function KebabVim_utils.UPDATE()
 			vim.notify(
 				"Failed to update: "
 					.. tostring(pull_output)
-					.. "\nTHIS FEATURE IS UNDER DEVELOPMENT\nDISABLE AT INIT.LUA",
+					.. "\nTHIS FEATURE IS UNDER DEVELOPMENT\nDISABLE AT KebabVim.config",
 				vim.log.levels.ERROR,
 				{
 					title = "AUTO UPDATE",

@@ -173,7 +173,9 @@ if directory_exists(vim.fn.expand(tostring(vim.g.KebabVimPath))) then
 
 		if vim.g.AutoUpdate == true then
 			if not KebabVim_utils.UPDATE() then
-				vim.notify("Failed to do a update check!", vim.log.levels.ERROR)
+				vim.notify("Failed to do a update check!", vim.log.levels.ERROR, {
+					title = "ERROR",
+				})
 			end
 		end
 	end
