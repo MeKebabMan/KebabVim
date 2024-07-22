@@ -102,7 +102,7 @@ function KebabVim_utils.GetVariables(_config_file)
 
 	local config_file = vim.fn.expand(tostring(_config_file))
 
-	-- read the file 
+	-- read the file
 	local file = io.open(config_file, "r")
 	if not file then
 		vim.notify("Could not parse Kebabvim config", vim.log.levels.ERROR, {
@@ -114,7 +114,7 @@ function KebabVim_utils.GetVariables(_config_file)
 	local content = file:read("*all")
 	file:close()
 
-	-- parse the file content 
+	-- parse the file content
 	local data = {}
 	for line in content:gmatch("[^\r\n]+") do
 		local key, value = line:match("([^=]+)=([^=]+)")
@@ -123,7 +123,7 @@ function KebabVim_utils.GetVariables(_config_file)
 		end
 	end
 
-	-- Convert all the variables into readable data 
+	-- Convert all the variables into readable data
 	for key, value in pairs(data) do
 		if key and value then
 			if key and string.lower(tostring(value)) == string.lower(tostring("true")) then
@@ -134,6 +134,11 @@ function KebabVim_utils.GetVariables(_config_file)
 				vim.g[key] = tostring(value:sub(2, -2))
 			elseif key and string.lower(tostring(value)) == string.lower(tostring("null")) then
 				vim.g[key] = nil
+			elseif key and string.lower(value:sub(1, 1)) == string.lower("P") then
+				if value:sub(2, 2) == '"' and value:sub(-1) == '"' then
+					-- PATH VARIABLE
+					vim.g[key] = vim.fn.expand(tostring(value:sub(3, -2)))
+				end
 			else
 				vim.g[key] = value
 			end

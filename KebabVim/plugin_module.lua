@@ -159,31 +159,31 @@ function plugin_module.which_key()
 	wk.add({
 		{
 			"<C-e>",
-			desc = "Open file explorer"
-		}
+			desc = "Open file explorer",
+		},
 	})
 end
 
 function plugin_module.alphanvim()
-    local alpha = require("alpha")
-    local dashboard = require("alpha.themes.dashboard")
+	local alpha = require("alpha")
+	local dashboard = require("alpha.themes.dashboard")
 
-    dashboard.section.header.val = {
-	[[██╗░░██╗███████╗██████╗░░█████╗░██████╗░██╗░░░██╗██╗███╗░░░███╗]],
-	[[██║░██╔╝██╔════╝██╔══██╗██╔══██╗██╔══██╗██║░░░██║██║████╗░████║]],
-	[[█████═╝░█████╗░░██████╦╝███████║██████╦╝╚██╗░██╔╝██║██╔████╔██║]],
-	[[██╔═██╗░██╔══╝░░██╔══██╗██╔══██║██╔══██╗░╚████╔╝░██║██║╚██╔╝██║]],
-	[[██║░╚██╗███████╗██████╦╝██║░░██║██████╦╝░░╚██╔╝░░██║██║░╚═╝░██║]],
-	[[╚═╝░░╚═╝╚══════╝╚═════╝░╚═╝░░╚═╝╚═════╝░░░░╚═╝░░░╚═╝╚═╝░░░░░╚═╝]],
-    }
+	dashboard.section.header.val = {
+		[[██╗░░██╗███████╗██████╗░░█████╗░██████╗░██╗░░░██╗██╗███╗░░░███╗]],
+		[[██║░██╔╝██╔════╝██╔══██╗██╔══██╗██╔══██╗██║░░░██║██║████╗░████║]],
+		[[█████═╝░█████╗░░██████╦╝███████║██████╦╝╚██╗░██╔╝██║██╔████╔██║]],
+		[[██╔═██╗░██╔══╝░░██╔══██╗██╔══██║██╔══██╗░╚████╔╝░██║██║╚██╔╝██║]],
+		[[██║░╚██╗███████╗██████╦╝██║░░██║██████╦╝░░╚██╔╝░░██║██║░╚═╝░██║]],
+		[[╚═╝░░╚═╝╚══════╝╚═════╝░╚═╝░░╚═╝╚═════╝░░░░╚═╝░░░╚═╝╚═╝░░░░░╚═╝]],
+	}
 
-    dashboard.section.buttons.val = {
-	     dashboard.button( "e", "  New file" , ":ene <BAR> startinsert <CR>"),
-             dashboard.button( "q", "󰅚  Quit NVIM" , ":qa<CR>"),
-	     dashboard.button( "<C-e>", "  File explorer", ":Neotree filesystem reveal left<CR>")
-    }
+	dashboard.section.buttons.val = {
+		dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
+		dashboard.button("q", "󰅚  Quit NVIM", ":qa<CR>"),
+		dashboard.button("<C-e>", "  File explorer", ":Neotree filesystem reveal left<CR>"),
+	}
 
-    alpha.setup(dashboard.opts)
+	alpha.setup(dashboard.opts)
 end
 
 return plugin_module

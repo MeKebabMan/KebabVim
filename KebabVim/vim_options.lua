@@ -1,7 +1,7 @@
 local vim_options = {}
 
 function vim_options.SetKebabVimDefault()
-	vim.cmd([[ 
+	vim.cmd([[
 
 	syntax enable
 

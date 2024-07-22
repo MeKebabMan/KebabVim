@@ -1,33 +1,18 @@
-Hello! IF THIS PAGE OPENED THAT MEANS THAT YOU HAVE INSTALLED KEBABVIM OR KEBABVIM HAS UPDATED!
+GITHUB REPOSITORY: https://github.com/MeKebabMan/KebabVim
+
+Why did this file randomly open up?
+1: KebabVim updated
+2: You successfully installed KebabVim 
+3: Post a Issue on github if none of the above
+
+NOTES:
+KebabVim is hard to maintain after all I am only one person..
+
 Welcome to a custom set up made by @me_kebab_man (DISCORD), @MeKebabMan (GITHUB)
 
-Features:
-Auto-completion
-Snippets
-Language-servers
-Code-Formatting
-Prettier
-Clang-format 
-stylua 
-Javascript / Typescript
-Html 
-CSS 
-json 
-yaml 
-C 
-C++ 
-C# 
-lua 
-File explorer
-Telescope 
-lualine
-Good default theme!
-Auto-updates
-Autotag 
-autopairs
-auto updates
+Basic KebabVim Keybinds:
 
-Keybinds:
+WARNING: This is not all of the keybinds there are a lot more.
 
 Ctrl + e - OPEN FILE EXPLORER ->
 USE (DOWN ARROW) TO MOVE DOWN IN THE FILE EXPLORER -> 

@@ -145,7 +145,7 @@ KebabVim_config.plugins = {
 	},
 	{
 		"nvim-lua/plenary.nvim",
-	}
+	},
 }
 
 -- LANGUAGE SERVERS
@@ -162,7 +162,7 @@ KebabVim_config.language_servers = {
 	"cmake",
 }
 
--- TREESITTER SYNTAX 
+-- TREESITTER SYNTAX
 KebabVim_config.treesitter = {
 	"lua",
 	"c",
@@ -179,6 +179,5 @@ KebabVim_config.treesitter = {
 	"xml",
 	"c_sharp",
 }
-
 
 return KebabVim_config

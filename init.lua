@@ -3,27 +3,74 @@
 -- NEOVIM CONFIG MADE BY @me_kebab_man (DISCORD), @MeKebabMan (GITHUB)
 
 -- KEBAB VIM GITHUB REPOSITORY: https://github.com/MeKebabMan/KebabVim
--- SUPPORTED OS: 
--- Linux / Unix 
+-- SUPPORTED OS:
+-- Linux / Unix
 -- Mac OS (Not tested)
--- WSL+ with Windows 
+-- WSL+ with Windows
 -- UNSUPPORTED OS:
 -- Windows (WORKING ON IT!)
 
--- IMPORTANT VARIABLES 
-vim.g.KebabVimPath = vim.fn.expand("~/.config/nvim/KebabVim/")
-vim.g.NvimPath = vim.fn.expand("~/.config/nvim/")
+-- LOAD USER VARIABLES!
+local function GetVariables(_config_file)
+	if _config_file and type(_config_file) ~= "string" then
+		vim.notify("Could not parse Kebabvim config", vim.log.levels.ERROR, {
+			title = "ERROR",
+		})
+		return false
+	end
 
--- DEFAULT VARIABLES
-vim.g.ReadMeTXT = "NVIM_README.txt"
-vim.g.AutoUpdate = true
-vim.g.GitBranch = "main"
-vim.g.UseExtraPlugins = true
-vim.g.UseDefaultHomeScreen = true
+	local config_file = vim.fn.expand(tostring(_config_file))
+
+	-- read the file
+	local file = io.open(config_file, "r")
+	if not file then
+		vim.notify("Could not parse Kebabvim config", vim.log.levels.ERROR, {
+			title = "ERROR",
+		})
+		return false
+	end
+
+	local content = file:read("*all")
+	file:close()
+
+	-- parse the file content
+	local data = {}
+	for line in content:gmatch("[^\r\n]+") do
+		local key, value = line:match("([^=]+)=([^=]+)")
+		if key and value then
+			data[key:match("^%s*(.-)%s*$")] = value:match("^%s*(.-)%s*$")
+		end
+	end
+
+	-- Convert all the variables into readable data
+	for key, value in pairs(data) do
+		if key and value then
+			if key and string.lower(tostring(value)) == string.lower(tostring("true")) then
+				vim.g[key] = true
+			elseif key and string.lower(tostring(value)) == string.lower(tostring("false")) then
+				vim.g[key] = false
+			elseif key and value:sub(1, 1) == '"' and value:sub(-1) == '"' then
+				vim.g[key] = tostring(value:sub(2, -2))
+			elseif key and string.lower(tostring(value)) == string.lower(tostring("null")) then
+				vim.g[key] = nil
+			elseif key and string.lower(value:sub(1, 1)) == string.lower("P") then
+				if value:sub(2, 2) == '"' and value:sub(-1) == '"' then
+					vim.g[key] = vim.fn.expand(tostring(value:sub(3, -2)))
+				end
+			else
+				vim.g[key] = value
+			end
+		end
+	end
+
+	return true
+end
 
 local os = require("os")
 
--- Lazy.nvim plugin manager 
+GetVariables("~/.config/nvim/KebabVim.config")
+
+-- Lazy.nvim plugin manager
 -- PLUGIN MANAGER: https://github.com/folke/lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -47,7 +94,34 @@ local function directory_exists(directory)
 	return stat and stat.type == "directory"
 end
 
+-- SET DEFAULT VARIABLES
+if not vim.g.NvimPath then
+	vim.g.NvimPath = vim.fn.expand("~/.config/nvim/")
+end
+if not vim.g.KebabVimPath then
+	vim.g.KebabVimPath = vim.fn.expand("~/.config/nvim/KebabVim/")
+end
+if not vim.g.AutoUpdate then
+	vim.g.AutoUpdate = true
+end
+if not vim.g.UseDefaultHomeScreen then
+	vim.g.UseDefaultHomeScreen = true
+end
+if not vim.g.ReadMeTXT then
+	vim.g.ReadMeTXT = "NVIM_README.txt"
+end
+if not vim.g.GitBranch then
+	vim.g.GitBranch = "main"
+end
+if not vim.g.UseExtraPlugins then
+	vim.g.UseExtraPlugins = true
+end
+
 if directory_exists(vim.fn.expand(tostring(vim.g.KebabVimPath))) then
+	if not vim.g.KebabVimPath or not vim.g.NvimPath then
+		return
+	end
+
 	vim.opt.rtp:prepend(vim.fn.expand(tostring(vim.g.KebabVimPath)))
 
 	package.path = package.path .. ";" .. vim.fn.expand(tostring(vim.g.KebabVimPath)) .. "/?.lua"
@@ -66,16 +140,9 @@ if directory_exists(vim.fn.expand(tostring(vim.g.KebabVimPath))) then
 	-- Vim options
 	vim_options.SetKebabVimDefault()
 
-	if KebabVim_utils.GetVariables("~/.config/nvim/KebabVim.config") == false then
-		vim.notify("FAILED TO LOAD VARIABLES!", vim.log.levels.ERROR, {
-			title = "ERROR",
-		})
-	end
-
 	-- Plugins
+
 	if vim.g.UseDefaultHomeScreen == true then
-		-- DEBUG 
-		-- vim.notify("Default Home Screen", vim.log.levels.INFO)
 		plugin_module.alphanvim()
 	end
 
@@ -98,8 +165,6 @@ if directory_exists(vim.fn.expand(tostring(vim.g.KebabVimPath))) then
 	plugin_module.barbar()
 
 	if vim.g.UseExtraPlugins == true then
-		-- DEBUG 
-		-- vim.notify("Extra Plugins", vim.log.levels.INFO)
 		require("Comment").setup({})
 
 		require("gitsigns").setup({})
@@ -107,8 +172,6 @@ if directory_exists(vim.fn.expand(tostring(vim.g.KebabVimPath))) then
 		plugin_module.which_key()
 
 		if vim.g.AutoUpdate == true then
-			-- DEBUG 
-			-- vim.notify("Auto Update", vim.log.levels.INFO)
 			if not KebabVim_utils.UPDATE() then
 				vim.notify("Failed to do a update check!", vim.log.levels.ERROR)
 			end
